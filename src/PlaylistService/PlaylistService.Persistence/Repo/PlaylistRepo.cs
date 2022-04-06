@@ -1,7 +1,10 @@
-﻿using PlaylistService.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using PlaylistService.Application.Repo;
+using PlaylistService.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PlaylistService.Persistence.Repo
 {
@@ -14,7 +17,14 @@ namespace PlaylistService.Persistence.Repo
             _context = context;
         }
 
-        public void CreatePlaylist(int userId, Playlist playlist)
+        public async Task<bool> SaveChanges()
+        {
+            return (await _context.SaveChangesAsync() >= 0);
+        }
+
+        // Playlist
+
+        public async Task CreatePlaylist(int userId, Playlist playlist)
         {
             if (playlist == null)
             {
@@ -22,46 +32,75 @@ namespace PlaylistService.Persistence.Repo
             }
 
             playlist.UserId = userId;
-            _context.Playlists.Add(playlist);
+            await _context.Playlists.AddAsync(playlist);
         }
 
-        public IEnumerable<Playlist> GetPlaylistsForUser(int userId)
+        public async Task<IEnumerable<Playlist>> GetPlaylistsForUser(int userId)
         {
-            return _context.Playlists
+            return await _context.Playlists
                 .Where(p => p.UserId == userId)
-                .OrderBy(p => p.Title);
+                .OrderBy(p => p.Title)
+                .ToListAsync();
         }
 
-        public Playlist GetPlaylist(int userId, int playlistId)
+        public async Task<Playlist> GetPlaylist(int userId, int playlistId)
         {
-            return _context.Playlists
+            return await _context.Playlists
                 .Where(p => p.UserId == userId && p.Id == playlistId)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
 
-        public bool SaveChanges()
-        {
-            return (_context.SaveChanges() >= 0);
-        }
+        // User
 
-        public void CreateUser(User user)
+        public async Task CreateUser(User user)
         {
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user));
             }
 
-            _context.Users.Add(user);
+            await _context.Users.AddAsync(user);
         }
 
-        public bool UserExists(int userId)
+        public async Task<bool> UserExists(int userId)
         {
-            return _context.Users.Any(u => u.Id == userId);
+            return await _context.Users.AnyAsync(u => u.Id == userId);
         }
 
-        public bool ExternalUserExists(int externalUserId)
+        public async Task<bool> ExternalUserExists(int externalUserId)
         {
-            return _context.Users.Any(u => u.ExternalId == externalUserId);
+            return await _context.Users.AnyAsync(u => u.ExternalId == externalUserId);
+        }
+
+        // Tracks
+
+        public async Task<IEnumerable<Track>> GetTracksForPlaylist(int playlistId)
+        {
+            return await _context.Tracks
+                .Where(t => t.PlaylistId == playlistId)
+                .OrderBy(t => t.Title)
+                .ToListAsync();
+        }
+
+        public async Task<bool> TrackExists(int trackId)
+        {
+            return await _context.Tracks.AnyAsync(t => t.Id == trackId);
+        }
+
+        public async Task<bool> ExternalTrackExists(int externalTrackId)
+        {
+            return await _context.Tracks.AnyAsync(t => t.ExternalId == externalTrackId);
+        }
+
+        public async Task AddTrackToPlaylist(int playlistId, Track track)
+        {
+            if (track == null)
+            {
+                throw new ArgumentNullException(nameof(track));
+            }
+
+            track.PlaylistId = playlistId;
+            await _context.Tracks.AddAsync(track);
         }
     }
 }

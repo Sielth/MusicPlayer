@@ -13,6 +13,8 @@ namespace PlaylistService.Persistence
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Track> Tracks { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
@@ -26,6 +28,18 @@ namespace PlaylistService.Persistence
                 .HasMany(u => u.Playlist)
                 .WithOne(p => p.User)
                 .HasForeignKey(p => p.UserId);
+
+            modelBuilder
+                .Entity<Track>()
+                .HasOne(t => t.Playlist)
+                .WithMany(p => p.Tracks)
+                .HasForeignKey(t => t.PlaylistId);
+
+            modelBuilder
+                .Entity<Playlist>()
+                .HasMany(p => p.Tracks)
+                .WithOne(t => t.Playlist)
+                .HasForeignKey(t => t.PlaylistId);
         }
     }
 }

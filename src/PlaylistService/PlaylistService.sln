@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaylistService.Core", "PlaylistService.Core\PlaylistService.Core.csproj", "{2C692949-E0F7-477B-8CA6-656D71E07D0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaylistService.Core", "PlaylistService.Core\PlaylistService.Core.csproj", "{2C692949-E0F7-477B-8CA6-656D71E07D0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaylistService.Persistence", "PlaylistService.Persistence\PlaylistService.Persistence.csproj", "{ABDBFAA2-5010-4502-858C-B85CCC94C5ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaylistService.Persistence", "PlaylistService.Persistence\PlaylistService.Persistence.csproj", "{ABDBFAA2-5010-4502-858C-B85CCC94C5ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaylistService.Shared", "PlaylistService.Shared\PlaylistService.Shared.csproj", "{C938CB78-1629-4DA7-B4B3-DBE0EA08C294}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaylistService.Shared", "PlaylistService.Shared\PlaylistService.Shared.csproj", "{C938CB78-1629-4DA7-B4B3-DBE0EA08C294}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaylistService.Application", "PlaylistService.Application\PlaylistService.Application.csproj", "{4FCFD30C-F331-4C11-956C-DE444A05D5DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaylistService.Application", "PlaylistService.Application\PlaylistService.Application.csproj", "{4FCFD30C-F331-4C11-956C-DE444A05D5DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaylistService.API", "PlaylistService.API\PlaylistService.API.csproj", "{78D74E3F-19C6-4379-989F-B5CA0773392C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{4FCFD30C-F331-4C11-956C-DE444A05D5DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FCFD30C-F331-4C11-956C-DE444A05D5DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FCFD30C-F331-4C11-956C-DE444A05D5DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78D74E3F-19C6-4379-989F-B5CA0773392C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78D74E3F-19C6-4379-989F-B5CA0773392C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78D74E3F-19C6-4379-989F-B5CA0773392C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78D74E3F-19C6-4379-989F-B5CA0773392C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

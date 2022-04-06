@@ -4,4 +4,14 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PlaylistService.Core\PlaylistService.Core.csproj" />
+    <ProjectReference Include="..\PlaylistService.Shared\PlaylistService.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

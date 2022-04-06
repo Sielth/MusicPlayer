@@ -17,6 +17,6 @@ namespace PlaylistService.Core.Entities
 
         public User User { get; set; }
 
-        //public ICollection<Track> Tracks { get; set; }
+        public ICollection<Track> Tracks { get; set; }
     }
 }
