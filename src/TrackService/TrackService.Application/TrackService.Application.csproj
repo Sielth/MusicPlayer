@@ -6,6 +6,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrackService.Core\TrackService.Core.csproj" />
+    <ProjectReference Include="..\TrackService.Shared\TrackService.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
   </ItemGroup>
 
 </Project>

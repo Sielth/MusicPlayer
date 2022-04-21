@@ -30,7 +30,7 @@ namespace TrackService.Persistence.Repo
             }
         }
 
-        public async Task<IEnumerable<Track>> GetAllTracks()
+        public async Task<IEnumerable<Track>> GetTracks()
         {
             using (var session = _documentStore.OpenAsyncSession())
             {

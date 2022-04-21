@@ -33,9 +33,9 @@ namespace PlaylistService.Application.Handlers.PlaylistHandlers
             await _playlistRepo.CreatePlaylist(playlistModel.UserId, playlistModel);
             await _playlistRepo.SaveChanges();
 
-            var bookingResponse = _mapper.Map<PlaylistResponse>(playlistModel);
+            var playlistResponse = _mapper.Map<PlaylistResponse>(playlistModel);
 
-            return bookingResponse;
+            return playlistResponse;
         }
     }
 }

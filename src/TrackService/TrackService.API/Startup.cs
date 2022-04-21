@@ -1,18 +1,15 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Raven.Client.Documents;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TrackService.Application.Repo;
+using TrackService.Application.SyncDataServices.Http;
+using TrackService.Infrastructure.SyncDataServices.Http;
 using TrackService.Persistence.Repo;
 
 namespace TrackService.API
@@ -39,7 +36,7 @@ namespace TrackService.API
       services.AddSingleton<IDocumentStore>(provider =>
       {
         var databaseName = "Track";
-        var databaseUrl = "http://localhost:8080";
+        var databaseUrl = "http://172.17.0.2:8080";
 
         var store = new DocumentStore
         {
@@ -51,6 +48,9 @@ namespace TrackService.API
       });
 
       services.AddScoped<ITrackRepo, TrackRepo>();
+      services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+      services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+      services.AddHttpClient<IPlaylistDataClient, HttpPlaylistDataClient>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

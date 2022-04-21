@@ -2,19 +2,21 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>43919eb6-1104-4657-b788-4779a676c26a</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="RavenDB.Client" Version="5.3.101" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TrackService.Application\TrackService.Application.csproj" />
+    <ProjectReference Include="..\TrackService.Infrastructure\TrackService.Infrastructure.csproj" />
     <ProjectReference Include="..\TrackService.Persistence\TrackService.Persistence.csproj" />
   </ItemGroup>
 

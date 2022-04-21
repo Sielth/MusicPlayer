@@ -3,13 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackService.Core", "TrackService.Core\TrackService.Core.csproj", "{ECFA8857-264B-467E-A2A9-79D886BE4F0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackService.Core", "TrackService.Core\TrackService.Core.csproj", "{ECFA8857-264B-467E-A2A9-79D886BE4F0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackService.Persistence", "TrackService.Persistence\TrackService.Persistence.csproj", "{957E2D13-051E-4F11-BF7A-890661DB0EE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackService.Persistence", "TrackService.Persistence\TrackService.Persistence.csproj", "{957E2D13-051E-4F11-BF7A-890661DB0EE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackService.API", "TrackService.API\TrackService.API.csproj", "{DBCE071C-F863-46D2-B6AB-2EDD9D15EA6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackService.API", "TrackService.API\TrackService.API.csproj", "{DBCE071C-F863-46D2-B6AB-2EDD9D15EA6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackService.Application", "TrackService.Application\TrackService.Application.csproj", "{4100B7D0-FF0F-4B57-A148-5D35C4A1160A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackService.Application", "TrackService.Application\TrackService.Application.csproj", "{4100B7D0-FF0F-4B57-A148-5D35C4A1160A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackService.Shared", "TrackService.Shared\TrackService.Shared.csproj", "{6CC3FC66-5FF2-4D17-9567-F7C782574119}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackService.Infrastructure", "TrackService.Infrastructure\TrackService.Infrastructure.csproj", "{24B9C21D-00F4-410B-8A00-0887638B5AA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{4100B7D0-FF0F-4B57-A148-5D35C4A1160A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4100B7D0-FF0F-4B57-A148-5D35C4A1160A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4100B7D0-FF0F-4B57-A148-5D35C4A1160A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CC3FC66-5FF2-4D17-9567-F7C782574119}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CC3FC66-5FF2-4D17-9567-F7C782574119}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CC3FC66-5FF2-4D17-9567-F7C782574119}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CC3FC66-5FF2-4D17-9567-F7C782574119}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24B9C21D-00F4-410B-8A00-0887638B5AA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24B9C21D-00F4-410B-8A00-0887638B5AA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24B9C21D-00F4-410B-8A00-0887638B5AA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24B9C21D-00F4-410B-8A00-0887638B5AA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

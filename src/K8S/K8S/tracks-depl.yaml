@@ -1,0 +1,17 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tracks-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trackservice
+  template:
+    metadata:
+      labels:
+        app: trackservice
+    spec:
+      containers:
+        - name: trackservice
+          image: alessiacontenti/trackservice:latest

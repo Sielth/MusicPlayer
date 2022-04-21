@@ -8,7 +8,7 @@ namespace TrackService.Application.Repo
   {
     Task CreateTrack(Track track);
 
-    Task<IEnumerable<Track>> GetAllTracks();
+    Task<IEnumerable<Track>> GetTracks();
 
     Task<Track> GetTrack(string trackId);
   }
