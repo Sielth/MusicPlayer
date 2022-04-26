@@ -14,12 +14,12 @@ namespace TrackService.API.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  public class TrackController : ControllerBase
+  public class TracksController : ControllerBase
   {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
 
-    public TrackController(IMediator mediator, IMapper mapper)
+    public TracksController(IMediator mediator, IMapper mapper)
     {
       _mediator = mediator;
       _mapper = mapper;
@@ -36,11 +36,15 @@ namespace TrackService.API.Controllers
 
         await _mediator.Publish(new TrackAddedNotification { Track = trackAdded });
 
-        return trackAdded;
+        return CreatedAtRoute(nameof(GetTrack), new { Id = trackAdded.Id }, trackAdded);
       }
       catch (ArgumentNullException)
       {
         return BadRequest();
+      }
+      catch (OperationCanceledException ex)
+      {
+        return StatusCode(500, $"--> Could not send synchronously: {ex.Message}");
       }
     }
 

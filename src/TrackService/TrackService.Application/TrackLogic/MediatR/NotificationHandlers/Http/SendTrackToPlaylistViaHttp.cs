@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TrackService.Application.SyncDataServices.Http;
@@ -17,7 +18,14 @@ namespace TrackService.Application.TrackLogic.MediatR.NotificationHandlers.Http
 
     public async Task Handle(TrackAddedNotification notification, CancellationToken cancellationToken)
     {
-      await _playlistDataClient.SendTrackToCommand(notification.Track);
+      try
+      {
+        await _playlistDataClient.SendTrackToPlaylist(notification.Track);
+      }
+      catch (Exception)
+      {
+        throw new OperationCanceledException();
+      }
     }
   }
 }

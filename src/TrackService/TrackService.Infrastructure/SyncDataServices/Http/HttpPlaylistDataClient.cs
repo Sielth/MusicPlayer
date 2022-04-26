@@ -20,22 +20,23 @@ namespace TrackService.Infrastructure.SyncDataServices.Http
       _configuration = configuration;
     }
 
-    public async Task SendTrackToCommand(ReadTrackDTO track)
+    public async Task SendTrackToPlaylist(ReadTrackDTO track)
     {
       var httpContent = new StringContent(
                       JsonSerializer.Serialize(track),
                       Encoding.UTF8,
                       "application/json");
 
-      var response = await _httpClient.PostAsync($"{_configuration["PlaylistService"]}", httpContent);
-
-      if (response.IsSuccessStatusCode)
+      try
       {
-        Console.WriteLine("--> Sync POST to PlaylistService was OK!");
+        var response = await _httpClient.PostAsync($"{_configuration["PlaylistService"]}", httpContent);
+        
+        if (response.IsSuccessStatusCode) Console.WriteLine("--> Sync POST to PlaylistService was OK!");
       }
-      else
+      catch (Exception)
       {
         Console.WriteLine("--> Sync POST to PlaylistService was NOT OK!");
+        throw;
       }
     }
   }

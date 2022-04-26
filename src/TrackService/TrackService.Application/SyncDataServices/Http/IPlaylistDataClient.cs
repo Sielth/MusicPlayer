@@ -5,6 +5,6 @@ namespace TrackService.Application.SyncDataServices.Http
 {
   public interface IPlaylistDataClient
   {
-    Task SendTrackToCommand(ReadTrackDTO track);
+    Task SendTrackToPlaylist(ReadTrackDTO track);
   }
 }

@@ -1,31 +1,31 @@
 ﻿apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tracks-depl
+  name: playlists-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: trackservice
+      app: playlistservice
   template:
     metadata:
       labels:
-        app: trackservice
+        app: playlistservice
     spec:
       containers:
-        - name: trackservice
-          image: alessiacontenti/trackserviceapi:latest
+        - name: playlistservice
+          image: alessiacontenti/playlistserviceapi:latest
 ---
 apiVersion: v1
 kind: Service
 metadata: 
-  name: tracks-clusterip-srv
+  name: playlists-clusterip-srv
 spec:
   type: ClusterIP
   selector:
-    app: trackservice
+    app: playlistservice
   ports: 
-  - name: trackservice
+  - name: playlistservice
     protocol: TCP
     port: 80
     targetPort: 80

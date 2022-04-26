@@ -4,41 +4,14 @@ using System.Threading.Tasks;
 
 namespace PlaylistService.Application.Repo
 {
-    public interface IPlaylistRepo
-    {
-        Task<bool> SaveChanges();
+  public interface IPlaylistRepo
+  {
+    Task CreatePlaylist(int userId, Playlist playlist);
 
-        // Playlists
+    Task<IEnumerable<Playlist>> GetPlaylistsForUser(int userId);
 
-        Task CreatePlaylist(int userId, Playlist playlist);
+    Task<Playlist> GetPlaylistForUser(int userId, string playlistId);
 
-        Task<IEnumerable<Playlist>> GetPlaylistsForUser(int userId);
-
-        Task<Playlist> GetPlaylist(int userId, int playlistId);
-
-        //void UpdatePlaylist(int playlistId);
-
-        //void DeletePlaylist(int playlistId);
-
-
-        // Users
-
-        Task CreateUser(User user);
-
-        Task<bool> UserExists(int userId);
-
-        Task<bool> ExternalUserExists(int externalUserId);
-
-        //Tracks
-
-        Task<IEnumerable<Track>> GetTracksForPlaylist(int playlistId);
-
-        Task<bool> TrackExists(int trackId);
-
-        Task<bool> ExternalTrackExists(int externalTrackId);
-
-        Task AddTrackToPlaylist(int playlistId, Track track);
-
-        //void RemoveTrackFromPlaylist(int playlistId, int TrackId);
-    }
+    Task AddTrackToPlaylist(int userId, string playlistId, Track track);
+  }
 }

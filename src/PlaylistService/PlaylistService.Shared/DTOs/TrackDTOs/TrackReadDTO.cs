@@ -1,13 +1,14 @@
 ﻿namespace PlaylistService.Shared.DTOs.TrackDTOs
 {
-    public class TrackReadDTO
-    {
-        public int Id { get; set; }
+  public class TrackReadDTO
+  {
+    public string Id { get; set; }
 
-        public string Title { get; set; }
+    public string Title { get; set; }
 
-        public string ArtistId { get; set; }
+    public string Artist { get; set; }
 
-        public int PlaylistId { get; set; }
-    }
+    public string Genre { get; set; }
+
+  }
 }

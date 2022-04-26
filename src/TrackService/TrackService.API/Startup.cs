@@ -36,6 +36,7 @@ namespace TrackService.API
       services.AddSingleton<IDocumentStore>(provider =>
       {
         var databaseName = "Track";
+        //var databaseUrl = "http://localhost:8080";
         var databaseUrl = "http://172.17.0.2:8080";
 
         var store = new DocumentStore
@@ -51,6 +52,8 @@ namespace TrackService.API
       services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
       services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
       services.AddHttpClient<IPlaylistDataClient, HttpPlaylistDataClient>();
+
+      Console.WriteLine($"--> PlaylistService Endpoint {Configuration["PlaylistService"]}");
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

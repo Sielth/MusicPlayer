@@ -6,8 +6,12 @@ namespace PlaylistService.API.Controllers
 {
   [Route("api/p/[controller]")]
   [ApiController]
-  public class TrackController : ControllerBase
+  public class TracksController : ControllerBase
   {
+    public TracksController()
+    {
+
+    }
 
     [HttpPost]
     public ActionResult TestIndboundConnection()
