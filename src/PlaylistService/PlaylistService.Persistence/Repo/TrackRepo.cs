@@ -46,5 +46,14 @@ namespace PlaylistService.Persistence.Repo
         return await session.Advanced.ExistsAsync(trackId);
       }
     }
+
+    public async Task<Track> GetTrack(string trackId)
+    {
+      using (var session = _documentStore.OpenAsyncSession())
+      {
+        var track = await session.LoadAsync<Track>(trackId);
+        return track;
+      }
+    }
   }
 }

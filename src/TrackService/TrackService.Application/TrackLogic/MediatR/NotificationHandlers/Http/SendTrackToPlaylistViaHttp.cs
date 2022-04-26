@@ -24,7 +24,7 @@ namespace TrackService.Application.TrackLogic.MediatR.NotificationHandlers.Http
       }
       catch (Exception)
       {
-        throw new OperationCanceledException();
+        throw new Exception("--> Could not send synchronously");
       }
     }
   }

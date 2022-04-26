@@ -32,7 +32,7 @@ namespace PlaylistService.Application.PlaylistLogic.MediatR.RequestHandlers
 
       //if (!await _trackRepo.TrackExists(request.Track.Id)) throw new KeyNotFoundException(); TODO: Remove comment
 
-      var track = _mapper.Map<Track>(request.Track);
+      var track = await _trackRepo.GetTrack(request.TrackId);
 
       await _playlistRepo.AddTrackToPlaylist(request.UserId, request.Id, track);
 

@@ -17,11 +17,13 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.2.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PlaylistService.Application\PlaylistService.Application.csproj" />
+    <ProjectReference Include="..\PlaylistService.Infrastructure\PlaylistService.Infrastructure.csproj" />
     <ProjectReference Include="..\PlaylistService.Persistence\PlaylistService.Persistence.csproj" />
   </ItemGroup>
 

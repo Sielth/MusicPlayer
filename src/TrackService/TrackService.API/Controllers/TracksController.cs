@@ -44,22 +44,15 @@ namespace TrackService.API.Controllers
       }
       catch (OperationCanceledException ex)
       {
-        return StatusCode(500, $"--> Could not send synchronously: {ex.Message}");
+        return StatusCode(500, ex.Message);
       }
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ReadTrackDTO>>> GetTracks()
     {
-      try
-      {
-        var response = await _mediator.Send(new GetTracksQuery());
-        return _mapper.Map<IEnumerable<ReadTrackDTO>>(response).ToList();
-      }
-      catch (ArgumentNullException)
-      {
-        return NotFound();
-      }
+      var response = await _mediator.Send(new GetTracksQuery());
+      return _mapper.Map<IEnumerable<ReadTrackDTO>>(response).ToList();
     }
 
     [HttpGet("{**trackId}", Name = "GetTrack")]

@@ -11,5 +11,7 @@ namespace PlaylistService.Application.Repo
     Task<IEnumerable<Track>> GetTracks();
 
     Task<bool> TrackExists(string trackId);
+
+    Task<Track> GetTrack(string trackId);
   }
 }

@@ -12,15 +12,13 @@ namespace PlaylistService.Application.PlaylistLogic.AutoMapper
     public PlaylistProfile()
     {
       // Source -> Target
-      CreateMap<PlaylistCreateDTO, CreatePlaylistCommand>();
+      CreateMap<CreatePlaylistDTO, CreatePlaylistCommand>();
       CreateMap<CreatePlaylistCommand, Playlist>();
 
-      //CreateMap<TrackReadDTO, AddTrackToPlaylistCommand>();
-      CreateMap<TrackReadDTO, Track>();
       CreateMap<AddTrackToPlaylistCommand, Playlist>();
 
       CreateMap<Playlist, PlaylistResponse>();
-      CreateMap<PlaylistResponse, PlaylistReadDTO>();
+      CreateMap<PlaylistResponse, ReadPlaylistDTO>();
     }
   }
 }

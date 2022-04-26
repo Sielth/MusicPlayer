@@ -10,6 +10,6 @@ namespace PlaylistService.Application.PlaylistLogic.CQRS.Commands
 
     public int UserId { get; set; }
 
-    public TrackReadDTO Track { get; set; }
+    public string TrackId { get; set; }
   }
 }

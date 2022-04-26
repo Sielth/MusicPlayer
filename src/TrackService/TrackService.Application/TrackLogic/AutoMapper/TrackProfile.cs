@@ -16,6 +16,8 @@ namespace TrackService.Application.TrackLogic.AutoMapper
 
       CreateMap<Track, TrackResponse>();
       CreateMap<TrackResponse, ReadTrackDTO>();
+
+      CreateMap<ReadTrackDTO, PublishedTrackDTO>();
     }
   }
 }

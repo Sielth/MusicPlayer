@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
 using MediatR;
+using PlaylistService.Application.Repo;
+using PlaylistService.Application.TrackLogic.CQRS.Queries;
+using PlaylistService.Application.TrackLogic.CQRS.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using TrackService.Application.Repo;
-using TrackService.Application.TrackLogic.CQRS.Queries;
-using TrackService.Application.TrackLogic.CQRS.Responses;
 
-namespace TrackService.Application.TrackLogic.MediatR.RequestHandlers
+namespace PlaylistService.Application.TrackLogic.MediatR.RequestHandlers
 {
   public class GetTracksHandler : IRequestHandler<GetTracksQuery, IEnumerable<TrackResponse>>
   {
@@ -25,7 +24,7 @@ namespace TrackService.Application.TrackLogic.MediatR.RequestHandlers
 
     public async Task<IEnumerable<TrackResponse>> Handle(GetTracksQuery request, CancellationToken cancellationToken)
     {
-      Console.WriteLine($"--> Hit GetTracks");
+      Console.WriteLine($"--> Hit GetTracks on PlaylistService");
 
       var tracks = await _trackRepo.GetTracks();
 

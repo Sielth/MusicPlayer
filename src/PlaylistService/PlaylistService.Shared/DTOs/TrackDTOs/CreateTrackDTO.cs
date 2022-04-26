@@ -2,7 +2,7 @@
 
 namespace PlaylistService.Shared.DTOs.TrackDTOs
 {
-    public class TrackCreateDTO
+    public class CreateTrackDTO
     {
         [Required]
         public string Title { get; set; }

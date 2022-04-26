@@ -5,7 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using PlaylistService.Application.EventProcessing;
 using PlaylistService.Application.Repo;
+using PlaylistService.Infrastructure.AsyncDataServices;
 using PlaylistService.Persistence.Repo;
 using Raven.Client.Documents;
 using System;
@@ -42,6 +44,10 @@ namespace PlaylistService.API
 
       services.AddScoped<IPlaylistRepo, PlaylistRepo>();
       services.AddScoped<ITrackRepo, TrackRepo>();
+
+      services.AddSingleton<IEventProcessor, EventProcessor>();
+      services.AddHostedService<MessageBusSubscriber>();
+
       services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
       services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 

@@ -25,7 +25,7 @@ namespace PlaylistService.API.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<PlaylistReadDTO>> CreatePlaylist(int userId, PlaylistCreateDTO playlist)
+    public async Task<ActionResult<ReadPlaylistDTO>> CreatePlaylist(int userId, CreatePlaylistDTO playlist)
     {
       try
       {
@@ -35,7 +35,7 @@ namespace PlaylistService.API.Controllers
 
         var response = await _mediator.Send(request);
 
-        return _mapper.Map<PlaylistReadDTO>(response);
+        return _mapper.Map<ReadPlaylistDTO>(response);
       }
       catch (KeyNotFoundException)
       {
@@ -44,13 +44,13 @@ namespace PlaylistService.API.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<PlaylistReadDTO>>> GetPlaylistsForUser(int userId)
+    public async Task<ActionResult<IEnumerable<ReadPlaylistDTO>>> GetPlaylistsForUser(int userId)
     {
       try
       {
         var response = await _mediator.Send(new GetPlaylistsForUserQuery { UserId = userId });
 
-        return _mapper.Map<IEnumerable<PlaylistReadDTO>>(response).ToList();
+        return _mapper.Map<IEnumerable<ReadPlaylistDTO>>(response).ToList();
       }
       catch (KeyNotFoundException)
       {
@@ -58,14 +58,14 @@ namespace PlaylistService.API.Controllers
       }
     }
 
-    [HttpGet("{**playlistId}", Name = "GetPlaylist")]
-    public async Task<ActionResult<PlaylistReadDTO>> GetPlaylistForUser(int userId, string playlistId)
+    [HttpGet("{**playlistId}", Name = "GetPlaylistForUser")]
+    public async Task<ActionResult<ReadPlaylistDTO>> GetPlaylistForUser(int userId, string playlistId)
     {
       try
       {
         var response = await _mediator.Send(new GetPlaylistForUserQuery { UserId = userId, Id = playlistId });
 
-        return _mapper.Map<PlaylistReadDTO>(response);
+        return _mapper.Map<ReadPlaylistDTO>(response);
       }
       catch (KeyNotFoundException)
       {
@@ -74,12 +74,12 @@ namespace PlaylistService.API.Controllers
     }
 
     [HttpPut("{**playlistId}")]
-    public async Task<ActionResult<PlaylistReadDTO>> AddTrackToPlaylist(int userId, string playlistId, TrackReadDTO track)
+    public async Task<ActionResult<ReadPlaylistDTO>> AddTrackToPlaylist(int userId, string playlistId, string trackId)
     {
       try
       {
-        var response = await _mediator.Send(new AddTrackToPlaylistCommand { Id = playlistId, UserId = userId, Track = track});
-        return _mapper.Map<PlaylistReadDTO>(response);
+        var response = await _mediator.Send(new AddTrackToPlaylistCommand { Id = playlistId, UserId = userId, TrackId = trackId });
+        return _mapper.Map<ReadPlaylistDTO>(response);
       }
       catch (KeyNotFoundException)
       {
