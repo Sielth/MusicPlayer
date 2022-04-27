@@ -12,7 +12,7 @@ using TrackService.Application.TrackLogic.CQRS.Responses;
 
 namespace TrackService.Application.TrackLogic.MediatR.RequestHandlers
 {
-  public class GetTracksHandler : IRequestHandler<GetTracksQuery, IEnumerable<TrackResponse>>
+  public class GetTracksHandler : IRequestHandler<GetTracksQuery, IEnumerable<CQRSTrackResponse>>
   {
     private readonly ITrackRepo _trackRepo;
     private readonly IMapper _mapper;
@@ -23,13 +23,13 @@ namespace TrackService.Application.TrackLogic.MediatR.RequestHandlers
       _mapper = mapper;
     }
 
-    public async Task<IEnumerable<TrackResponse>> Handle(GetTracksQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<CQRSTrackResponse>> Handle(GetTracksQuery request, CancellationToken cancellationToken)
     {
       Console.WriteLine($"--> Hit GetTracks");
 
       var tracks = await _trackRepo.GetTracks();
 
-      return _mapper.Map<IEnumerable<TrackResponse>>(tracks);
+      return _mapper.Map<IEnumerable<CQRSTrackResponse>>(tracks);
     }
   }
 }

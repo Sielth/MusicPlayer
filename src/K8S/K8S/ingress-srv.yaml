@@ -17,7 +17,7 @@ spec:
                 name: tracks-clusterip-srv
                 port:
                   number: 80
-          - path: /api/p/tracks
+          - path: /api/p
             pathType: Prefix
             backend:
               service:

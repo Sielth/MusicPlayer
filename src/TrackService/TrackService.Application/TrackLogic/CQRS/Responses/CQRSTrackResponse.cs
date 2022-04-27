@@ -1,6 +1,6 @@
 ﻿namespace TrackService.Application.TrackLogic.CQRS.Responses
 {
-  public class TrackResponse
+  public class CQRSTrackResponse
   {
     public string Id { get; set; }
 

@@ -1,14 +1,17 @@
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Raven.Client.Documents;
 using System;
+using System.IO;
 using TrackService.Application.AsyncDataServices;
 using TrackService.Application.Repo;
+using TrackService.Application.SyncDataServices.Grpc;
 using TrackService.Application.SyncDataServices.Http;
 using TrackService.Infrastructure.AsyncDataServices;
 using TrackService.Infrastructure.SyncDataServices.Http;
@@ -55,6 +58,7 @@ namespace TrackService.API
       services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
       services.AddHttpClient<IPlaylistDataClient, HttpPlaylistDataClient>();
       services.AddSingleton<IMessageBusClient, MessageBusClient>();
+      services.AddGrpc();
 
       Console.WriteLine($"--> PlaylistService Endpoint {Configuration["PlaylistService"]}");
     }
@@ -78,6 +82,12 @@ namespace TrackService.API
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
+        endpoints.MapGrpcService<GrpcTrackService>();
+
+        endpoints.MapGet("../TrackService.Application/protos/tracks.proto", async context =>
+        {
+          await context.Response.WriteAsync(File.ReadAllText("../TrackService.Application/Protos/tracks.proto"));
+        });
       });
 
       Seed.PrepPopulation(app);

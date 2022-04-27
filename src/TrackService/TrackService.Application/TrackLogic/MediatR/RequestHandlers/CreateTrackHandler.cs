@@ -10,7 +10,7 @@ using TrackService.Core.Entities;
 
 namespace TrackService.Application.TrackLogic.MediatR.RequestHandlers
 {
-  public class CreateTrackHandler : IRequestHandler<CreateTrackCommand, TrackResponse>
+  public class CreateTrackHandler : IRequestHandler<CreateTrackCommand, CQRSTrackResponse>
   {
     private readonly ITrackRepo _trackRepo;
     private readonly IMapper _mapper;
@@ -22,7 +22,7 @@ namespace TrackService.Application.TrackLogic.MediatR.RequestHandlers
     }
 
 
-    public async Task<TrackResponse> Handle(CreateTrackCommand request, CancellationToken cancellationToken)
+    public async Task<CQRSTrackResponse> Handle(CreateTrackCommand request, CancellationToken cancellationToken)
     {
       Console.WriteLine($"--> Hit CreateTrack");
 
@@ -32,7 +32,7 @@ namespace TrackService.Application.TrackLogic.MediatR.RequestHandlers
 
       await _trackRepo.CreateTrack(trackModel);
 
-      var trackResponse = _mapper.Map<TrackResponse>(trackModel);
+      var trackResponse = _mapper.Map<CQRSTrackResponse>(trackModel);
 
       return trackResponse;
     }

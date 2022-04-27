@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using PlaylistService.Application.EventProcessing;
 using PlaylistService.Application.Repo;
+using PlaylistService.Application.SyncDataServices.Grpc;
 using PlaylistService.Infrastructure.AsyncDataServices;
 using PlaylistService.Persistence.Repo;
 using Raven.Client.Documents;
@@ -51,6 +52,8 @@ namespace PlaylistService.API
       services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
       services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
+      services.AddScoped<ITrackDataClient, TrackDataClient>();
+
       services.AddControllers();
       services.AddSwaggerGen(c =>
       {
@@ -78,6 +81,8 @@ namespace PlaylistService.API
       {
         endpoints.MapControllers();
       });
+
+      Seed.PrepPopulation(app);
     }
   }
 }

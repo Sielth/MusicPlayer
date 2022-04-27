@@ -9,7 +9,7 @@ using TrackService.Application.TrackLogic.CQRS.Responses;
 
 namespace TrackService.Application.TrackLogic.MediatR.RequestHandlers
 {
-  public class GetTrackHandler : IRequestHandler<GetTrackQuery, TrackResponse>
+  public class GetTrackHandler : IRequestHandler<GetTrackQuery, CQRSTrackResponse>
   {
     private readonly ITrackRepo _trackRepo;
     private readonly IMapper _mapper;
@@ -20,7 +20,7 @@ namespace TrackService.Application.TrackLogic.MediatR.RequestHandlers
       _mapper = mapper;
     }
 
-    public async Task<TrackResponse> Handle(GetTrackQuery request, CancellationToken cancellationToken)
+    public async Task<CQRSTrackResponse> Handle(GetTrackQuery request, CancellationToken cancellationToken)
     {
       Console.WriteLine($"--> Hit GetTrack: {request.Id}");
 
@@ -28,7 +28,7 @@ namespace TrackService.Application.TrackLogic.MediatR.RequestHandlers
 
       if (track == null) throw new ArgumentNullException(nameof(track));
 
-      return _mapper.Map<TrackResponse>(track);
+      return _mapper.Map<CQRSTrackResponse>(track);
     }
   }
 }

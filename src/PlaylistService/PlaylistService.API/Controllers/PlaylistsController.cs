@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using PlaylistService.Application.PlaylistLogic.CQRS.Commands;
 using PlaylistService.Application.PlaylistLogic.CQRS.Queries;
 using PlaylistService.Shared.DTOs.PlaylistDTOs;
-using PlaylistService.Shared.DTOs.TrackDTOs;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

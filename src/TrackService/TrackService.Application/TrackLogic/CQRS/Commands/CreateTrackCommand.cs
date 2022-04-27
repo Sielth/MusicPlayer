@@ -3,7 +3,7 @@ using TrackService.Application.TrackLogic.CQRS.Responses;
 
 namespace TrackService.Application.TrackLogic.CQRS.Commands
 {
-  public class CreateTrackCommand : IRequest<TrackResponse>
+  public class CreateTrackCommand : IRequest<CQRSTrackResponse>
   {
     public string Title { get; set; }
 

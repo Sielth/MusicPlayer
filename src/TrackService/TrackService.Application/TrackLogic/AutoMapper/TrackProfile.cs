@@ -14,10 +14,12 @@ namespace TrackService.Application.TrackLogic.AutoMapper
       CreateMap<CreateTrackDTO, CreateTrackCommand>();
       CreateMap<CreateTrackCommand, Track>();
 
-      CreateMap<Track, TrackResponse>();
-      CreateMap<TrackResponse, ReadTrackDTO>();
+      CreateMap<Track, CQRSTrackResponse>();
+      CreateMap<CQRSTrackResponse, ReadTrackDTO>();
 
       CreateMap<ReadTrackDTO, PublishedTrackDTO>();
+
+      CreateMap<Track, GrpcTrackModel>();
     }
   }
 }
