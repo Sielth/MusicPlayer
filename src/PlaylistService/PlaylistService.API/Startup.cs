@@ -30,8 +30,8 @@ namespace PlaylistService.API
       services.AddSingleton<IDocumentStore>(provider =>
       {
         var databaseName = "Playlist";
-        var databaseUrl = "http://localhost:8080";
-        //var databaseUrl = "http://172.17.0.2:8080";
+        //var databaseUrl = "http://localhost:8080";
+        var databaseUrl = "http://172.17.0.2:8080";
 
         var store = new DocumentStore
         {
