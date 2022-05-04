@@ -9,5 +9,7 @@
     public string Artist { get; set; }
 
     public string Genre { get; set; }
+
+    public string Mood { get; set; }
   }
 }

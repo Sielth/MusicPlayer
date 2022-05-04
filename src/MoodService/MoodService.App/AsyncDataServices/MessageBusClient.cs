@@ -1,13 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
+using MoodService.App.DTOs;
 using RabbitMQ.Client;
 using System;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using TrackService.Application.AsyncDataServices;
-using TrackService.Shared.DTOs.TrackDTOs;
 
-namespace TrackService.Infrastructure.AsyncDataServices
+namespace MoodService.App.AsyncDataServices
 {
   public class MessageBusClient : IMessageBusClient
   {
@@ -67,9 +65,9 @@ namespace TrackService.Infrastructure.AsyncDataServices
       }
     }
 
-    public void PublishNewTrack(PublishedTrackDTO publishedTrackDTO)
+    public void PublishTrackAnalyzed(TrackAnalyzedDTO trackAnalyzedDTO)
     {
-      var message = JsonSerializer.Serialize(publishedTrackDTO);
+      var message = JsonSerializer.Serialize(trackAnalyzedDTO);
 
       if (_connection.IsOpen)
       {

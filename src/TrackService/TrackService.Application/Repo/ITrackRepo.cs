@@ -10,6 +10,10 @@ namespace TrackService.Application.Repo
 
     Task<IEnumerable<Track>> GetTracks();
 
+    Task<IEnumerable<Track>> GetTracksByMood(string mood);
+
     Task<Track> GetTrack(string trackId);
+
+    Task UpdateMoodOfTrack(Track track);
   }
 }

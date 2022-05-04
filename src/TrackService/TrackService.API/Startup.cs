@@ -10,6 +10,7 @@ using Raven.Client.Documents;
 using System;
 using System.IO;
 using TrackService.Application.AsyncDataServices;
+using TrackService.Application.EventProcessing;
 using TrackService.Application.Repo;
 using TrackService.Application.SyncDataServices.Grpc;
 using TrackService.Application.SyncDataServices.Http;
@@ -41,8 +42,8 @@ namespace TrackService.API
       services.AddSingleton<IDocumentStore>(provider =>
       {
         var databaseName = "Track";
-        //var databaseUrl = "http://localhost:8080";
-        var databaseUrl = "http://172.17.0.2:8080";
+        var databaseUrl = "http://localhost:8080";
+        //var databaseUrl = "http://172.17.0.2:8080";
 
         var store = new DocumentStore
         {
@@ -57,7 +58,11 @@ namespace TrackService.API
       services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
       services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
       services.AddHttpClient<IPlaylistDataClient, HttpPlaylistDataClient>();
+
       services.AddSingleton<IMessageBusClient, MessageBusClient>();
+      services.AddSingleton<IEventProcessor, EventProcessor>();
+      services.AddHostedService<MessageBusSubscriber>();
+
       services.AddGrpc();
 
       Console.WriteLine($"--> PlaylistService Endpoint {Configuration["PlaylistService"]}");

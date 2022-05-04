@@ -1,0 +1,31 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moods-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moodservice
+  template:
+    metadata:
+      labels:
+        app: moodservice
+    spec:
+      containers:
+        - name: moodservice
+          image: alessiacontenti/moodserviceapp:latest
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: moods-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: moodservice
+  ports: 
+  - name: moodservice
+    protocol: TCP
+    port: 80
+    targetPort: 80

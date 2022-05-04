@@ -1,27 +1,24 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using PlaylistService.Application.Repo;
-using PlaylistService.Application.TrackLogic.CQRS.Commands;
-using PlaylistService.Core.Entities;
-using PlaylistService.Shared.DTOs;
-using PlaylistService.Shared.DTOs.TrackDTOs;
 using System;
 using System.Text.Json;
+using TrackService.Application.Repo;
+using TrackService.Core.Entities;
+using TrackService.Shared.DTOs;
+using TrackService.Shared.DTOs.TrackDTOs;
 
-namespace PlaylistService.Application.EventProcessing
+namespace TrackService.Application.EventProcessing
 {
   public class EventProcessor : IEventProcessor
   {
     private readonly IServiceScopeFactory _scopeFactory;
     private readonly IMapper _mapper;
-    private readonly IMediator _mediator;
 
-    public EventProcessor(IServiceScopeFactory scopeFactory, IMapper mapper, IMediator mediator)
+    public EventProcessor(IServiceScopeFactory scopeFactory, IMapper mapper)
     {
       _scopeFactory = scopeFactory;
       _mapper = mapper;
-      _mediator = mediator;
     }
 
     public void ProcessEvent(string message)
@@ -30,36 +27,37 @@ namespace PlaylistService.Application.EventProcessing
 
       switch (eventType)
       {
-        case EventType.TrackPublished:
-          AddTrack(message);
+        case EventType.TrackAnalyzed:
+          UpdateTrack(message);
           break;
         default:
           break;
       }
     }
 
-    private void AddTrack(string platformPublishedMessage)
+    private void UpdateTrack(string trackAnalyzedMessage)
     {
       using (var scope = _scopeFactory.CreateScope())
       {
         var repo = scope.ServiceProvider.GetRequiredService<ITrackRepo>();
 
-        var publishedTrackDTO = JsonSerializer.Deserialize<PublishedTrackDTO>(platformPublishedMessage);
+        var analyzedTrackDTO = JsonSerializer.Deserialize<AnalyzedTrackDTO>(trackAnalyzedMessage);
 
         try
         {
-          var track = _mapper.Map<Track>(publishedTrackDTO);
+          var track = _mapper.Map<Track>(analyzedTrackDTO);
+
+          Console.WriteLine(track.Id + track.Title + track.Mood);
 
           //TODO: If !repo.PlatformExists
-          repo.CreateTrack(track);
-          Console.WriteLine($"--> Track added!");
-
+          repo.UpdateMoodOfTrack(track);
+          Console.WriteLine($"--> Track updated! {track.Id} / {track.Mood}");
 
           // _mediator.Send(request); ?? TODO: Figure out if I can use MediatR
         }
         catch (Exception ex)
         {
-          Console.WriteLine($"--> Could not add Track to DB: {ex.Message}");
+          Console.WriteLine($"--> Could not update Track: {ex.Message}");
         }
       }
     }
@@ -72,19 +70,13 @@ namespace PlaylistService.Application.EventProcessing
 
       switch (eventType.Event)
       {
-        case "Track_Published":
-          Console.WriteLine("--> Track Published Event Detected");
-          return EventType.TrackPublished;
+        case "Track_Analyzed":
+          Console.WriteLine("--> Track Analyzed Event Detected");
+          return EventType.TrackAnalyzed;
         default:
           Console.WriteLine("--> Could not determined the event type");
           return EventType.Undetermined;
       }
     }
-  }
-
-  enum EventType
-  {
-    TrackPublished,
-    Undetermined
   }
 }

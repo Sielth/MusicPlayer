@@ -18,6 +18,7 @@ namespace TrackService.Application.TrackLogic.AutoMapper
       CreateMap<CQRSTrackResponse, ReadTrackDTO>();
 
       CreateMap<ReadTrackDTO, PublishedTrackDTO>();
+      CreateMap<AnalyzedTrackDTO, Track>();
 
       CreateMap<Track, GrpcTrackModel>();
     }

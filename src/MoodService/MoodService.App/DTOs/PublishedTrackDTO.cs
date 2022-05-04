@@ -1,6 +1,6 @@
-﻿namespace TrackService.Application.TrackLogic.CQRS.Responses
+﻿namespace MoodService.App.DTOs
 {
-  public class CQRSTrackResponse
+  public class PublishedTrackDTO
   {
     public string Id { get; set; }
 
@@ -10,6 +10,6 @@
 
     public string Genre { get; set; }
 
-    public string Mood { get; set; }
+    public string Event { get; set; }
   }
 }

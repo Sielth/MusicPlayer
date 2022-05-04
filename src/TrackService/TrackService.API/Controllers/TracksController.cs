@@ -55,6 +55,13 @@ namespace TrackService.API.Controllers
       return _mapper.Map<IEnumerable<ReadTrackDTO>>(response).ToList();
     }
 
+    [HttpGet("{mood}")]
+    public async Task<ActionResult<IEnumerable<ReadTrackDTO>>> GetTracksByMood(string mood)
+    {
+      var response = await _mediator.Send(new GetTracksByMoodQuery { Mood = mood });
+      return _mapper.Map<IEnumerable<ReadTrackDTO>>(response).ToList();
+    }
+
     [HttpGet("{**trackId}", Name = "GetTrack")]
     public async Task<ActionResult<ReadTrackDTO>> GetTrack(string trackId)
     {
