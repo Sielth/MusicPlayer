@@ -1,0 +1,110 @@
+﻿@page "/playlists"
+@using MusicPlayer.Blazor.Models
+@using MusicPlayer.Blazor.Data
+@inject DialogService DialogService
+@inject IPlaylistService PlaylistService
+
+<h1>Your playlists</h1>
+
+<RadzenButton Icon="add" ButtonStyle="ButtonStyle.Secondary" Text="Add new playlist" class="my-3" Click=@ShowCreateDialog />
+
+<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced"
+                AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+                ShowPagingSummary="true" Data="_playlists" TItem="Playlist">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="Playlist" Property="Title" Title="Title" />
+
+        <RadzenDataGridColumn TItem="Playlist" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+            <Template Context="playlist">
+                <RadzenButton ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Medium" Icon="find_in_page" title="Show tracks in this playlist" Click="() => ShowGetPlaylistForUserDialog(1, playlist.Id, playlist.Title)" />
+            </Template>
+        </RadzenDataGridColumn>
+
+    </Columns>
+
+</RadzenDataGrid>
+
+@code {
+
+    IEnumerable<Playlist> _playlists = new List<Playlist>();
+    IEnumerable<Track> _tracks = new List<Track>();
+    Playlist _playlist = new();
+
+        protected override async Task OnInitializedAsync()
+    {
+        BusyDialog("Loading...");
+        _playlists = await PlaylistService.GetPlaylistsForUser(1);
+        DialogService.Close();
+
+        await base.OnInitializedAsync();
+    }
+
+    async Task ShowGetPlaylistForUserDialog(int userId, string playlistId, string playlistTitle)
+    {
+        _tracks = (await PlaylistService.GetPlaylistForUser(userId, playlistId)).Tracks;
+
+        var result = await DialogService.OpenAsync(playlistTitle, ds =>
+    @<div>
+        <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced"
+                AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+                ShowPagingSummary="true" Data="_tracks" TItem="Track">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="Track" Property="Title" Title="Title" />
+        <RadzenDataGridColumn TItem="Track" Property="Artist" Title="Artist" />
+        <RadzenDataGridColumn TItem="Track" Property="Genre" Title="Genre" />
+        <RadzenDataGridColumn TItem="Track" Property="Mood" Title="Mood" />
+
+        <RadzenDataGridColumn TItem="Track" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+            <Template Context="track">
+                <RadzenButton ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Medium" Icon="delete" title="Remove track from playlist (not implemented)" Click="DialogService.Close" />
+            </Template>
+        </RadzenDataGridColumn>
+
+    </Columns>
+
+</RadzenDataGrid>
+    </div>
+    );
+    }
+
+    async Task ShowCreateDialog()
+    {
+        var result = await DialogService.OpenAsync("Create new playlist", ds =>
+    @<div>
+        <p class="mb-4">
+            <RadzenTextBox Class="w-100" Placeholder=@nameof(Playlist.Title) @bind-Value="@_playlist.Title" />
+        </p>
+
+        <div class="row">
+            <div class="col">
+                <RadzenButton Text="Save" Click="() => CreatePlaylist(1, _playlist)" Class="mr-1" />
+                <RadzenButton Text="Cancel" Click="() => ds.Close(false)" ButtonStyle="ButtonStyle.Secondary" Class="mr-1" />
+            </div>
+        </div>
+    </div>
+    );
+    }
+        async Task CreatePlaylist(int userId, Playlist playlist)
+    {
+        await PlaylistService.CreatePlaylist(userId, playlist);
+
+        await Task.Delay(500);
+        DialogService.Close();
+        _playlists = await PlaylistService.GetPlaylistsForUser(1);
+    }
+
+    
+    void BusyDialog(string text)
+    {
+        DialogService.Open("", ds =>
+    @<div>
+        <div class="row">
+            <div class="col-md-12">
+                @text
+            </div>
+        </div>
+    </div>, new DialogOptions { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto" });
+    }
+}

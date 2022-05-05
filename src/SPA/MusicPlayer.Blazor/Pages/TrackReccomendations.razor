@@ -1,0 +1,44 @@
+﻿@page "/recommendations"
+@using MusicPlayer.Blazor.Data
+@using MusicPlayer.Blazor.Models
+@inject ITrackService TrackService
+
+<h1>How are you today?</h1>
+
+<RadzenButton ButtonStyle="ButtonStyle.Secondary" Text="Sad" Click=@(args => GetTracksByMood("Sad")) class="my-3" />
+<RadzenButton ButtonStyle="ButtonStyle.Success" Text="Calm" Click=@(args => GetTracksByMood("Calm")) class="my-3" />
+<RadzenButton ButtonStyle="ButtonStyle.Warning" Text="Happy" Click=@(args => GetTracksByMood("Happy")) class="my-3" />
+<RadzenButton ButtonStyle="ButtonStyle.Danger" Text="Energetic" Click=@(args => GetTracksByMood("Energetic")) class="my-3" />
+
+<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced"
+            AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+            ShowPagingSummary="true" Data="_tracks" TItem="Track">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="Track" Property="Title" Title="Title" />
+        <RadzenDataGridColumn TItem="Track" Property="Artist" Title="Artist" />
+        <RadzenDataGridColumn TItem="Track" Property="Genre" Title="Genre" />
+        <RadzenDataGridColumn TItem="Track" Property="Mood" Title="Mood" />
+
+        <RadzenDataGridColumn TItem="Track" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+            <Template Context="track">
+                <RadzenButton ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Medium" Icon="favorite" title="Add track to playlist" />
+            </Template>
+        </RadzenDataGridColumn>
+
+    </Columns>
+
+</RadzenDataGrid>
+
+
+@code {
+
+    IEnumerable<Track> _tracks = new List<Track>();
+
+    Track _track = new();
+
+    async Task GetTracksByMood(string mood)
+    {
+        _tracks = await TrackService.GetTracksByMood(mood);
+    }
+}

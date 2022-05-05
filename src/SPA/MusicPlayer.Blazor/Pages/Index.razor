@@ -1,0 +1,126 @@
+﻿@page "/"
+@using MusicPlayer.Blazor.Data
+@using MusicPlayer.Blazor.Models
+@inject DialogService DialogService
+@inject ITrackService TrackService
+@inject IPlaylistService PlaylistService
+
+<h1>Tracks</h1>
+
+<RadzenButton Icon="add" ButtonStyle="ButtonStyle.Secondary" Text="Add new track" class="my-3" Click=@ShowCreateDialog />
+
+<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced"
+                AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+                ShowPagingSummary="true" Data="_tracks" TItem="Track">
+
+    <Columns>
+        <RadzenDataGridColumn TItem="Track" Property="Title" Title="Title" />
+        <RadzenDataGridColumn TItem="Track" Property="Artist" Title="Artist" />
+        <RadzenDataGridColumn TItem="Track" Property="Genre" Title="Genre" />
+
+        <RadzenDataGridColumn TItem="Track" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+            <Template Context="track">
+                <RadzenButton ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Medium" Icon="favorite" title="Add track to playlist" Click=@(args => ShowAddTrackToPlaylistDialog(track)) />
+            </Template>
+        </RadzenDataGridColumn>
+
+    </Columns>
+
+</RadzenDataGrid>
+
+@code {
+
+    IEnumerable<Track> _tracks = new List<Track>();
+
+    IEnumerable<Playlist> _playlists = new List<Playlist>();
+
+    Track _track = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        BusyDialog("Loading...");
+        _tracks = await TrackService.GetAllTracks();
+        DialogService.Close();
+
+        await base.OnInitializedAsync();
+    }
+
+    async Task ShowCreateDialog()
+    {
+        var result = await DialogService.OpenAsync("Insert track", ds =>
+    @<div>
+        <p class="mb-4">
+            <RadzenTextBox Class="w-100" Placeholder=@nameof(Track.Title) @bind-Value="@_track.Title" />
+        </p>
+
+        <p class="mb-4">
+            <RadzenTextBox Class="w-100" Placeholder=@nameof(Track.Artist) @bind-Value="@_track.Artist" />
+        </p>
+
+        <p class="mb-4">
+            <RadzenTextBox Class="w-100" Placeholder=@nameof(Track.Genre) @bind-Value="@_track.Genre" />
+        </p>
+
+        <div class="row">
+            <div class="col">
+                <RadzenButton Text="Save" Click="() => CreateTrack(_track)" Class="mr-1" />
+                <RadzenButton Text="Cancel" Click="() => ds.Close(false)" ButtonStyle="ButtonStyle.Secondary" Class="mr-1" />
+            </div>
+        </div>
+    </div>
+    );
+    }
+
+    async Task ShowAddTrackToPlaylistDialog(Track track)
+    {
+        _playlists = await PlaylistService.GetPlaylistsForUser(1);
+
+        var result = await DialogService.OpenAsync("What playlist would you like to add the track to?", ds =>
+    @<div>
+        <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced"
+                    AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+                    ShowPagingSummary="true" Data="_playlists" TItem="Playlist">
+
+            <Columns>
+                <RadzenDataGridColumn TItem="Playlist" Property="Title" Title="Title" />
+
+                <RadzenDataGridColumn TItem="Playlist" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="120px">
+                    <Template Context="playlist">
+                        <RadzenButton ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Medium" Icon="add" title="Add track to playlist" Click="() => AddTrackToPlaylist(1, playlist.Id, track.Id)" />
+                    </Template>
+                </RadzenDataGridColumn>
+
+            </Columns>
+
+        </RadzenDataGrid>
+    </div>
+    );
+    }
+
+    async Task AddTrackToPlaylist(int userId, string playlistId, string trackId)
+    {
+        await PlaylistService.AddTrackToPlaylist(userId, playlistId, trackId);
+        DialogService.Close();
+    }
+
+    async Task CreateTrack(Track track)
+    {
+        await TrackService.CreateTrack(track);
+
+        DialogService.Close();
+        _tracks = await TrackService.GetAllTracks();
+    }
+
+    void BusyDialog(string text)
+    {
+        DialogService.Open("", ds =>
+    @<div>
+        <div class="row">
+            <div class="col-md-12">
+                @text
+            </div>
+        </div>
+    </div>, new DialogOptions { ShowTitle = false, Style = "min-height:auto;min-width:auto;width:auto" });
+    }
+
+}
