@@ -17,6 +17,8 @@ namespace PlaylistService.API
 {
   public class Startup
   {
+    X509Certificate2 clientCertificate = new X509Certificate2("../../../free.sielth.client.certificate/free.sielth.client.certificate.pfx");
+
     public Startup(IConfiguration configuration)
     {
       Configuration = configuration;
@@ -31,13 +33,13 @@ namespace PlaylistService.API
       services.AddSingleton<IDocumentStore>(provider =>
       {
         var databaseName = "Playlist";
-        //var databaseUrl = "http://localhost:8080";
-        var databaseUrl = "http://172.17.0.2:8080";
+        var databaseUrl = "https://a.free.sielth.ravendb.cloud";
 
         var store = new DocumentStore
         {
           Database = databaseName,
-          Urls = new[] { databaseUrl }
+          Urls = new[] { databaseUrl },
+          Certificate = clientCertificate
         };
         store.Initialize();
         return store;
