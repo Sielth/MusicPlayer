@@ -12,6 +12,7 @@ using PlaylistService.Infrastructure.AsyncDataServices;
 using PlaylistService.Persistence.Repo;
 using Raven.Client.Documents;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PlaylistService.API
 {
